@@ -15,8 +15,10 @@ var (
 	KubeConfigFile string
 	MasterIPs      string
 	WorkerIPs      string
+	WinWorkerIPs   string
 	NumServers     int
 	NumWorkers     int
+	NumWinWorkers  int
 	AwsUser        string
 	AccessKey      string
 	modulesPath    = "/tests/terraform/modules"
@@ -46,7 +48,10 @@ func BuildCluster(t *testing.T, destroy bool) (string, error) {
 	if err != nil {
 		return "", err
 	}
-
+	NumWinWorkers, err = strconv.Atoi(terraform.GetVariableAsStringFromVarFile(t, varDir, "win_no_of_worker_nodes"))
+	if err != nil {
+		return "", err
+	}
 	splitRoles := terraform.GetVariableAsStringFromVarFile(t, varDir, "split_roles")
 	if splitRoles == "true" {
 		etcdNodes, err := strconv.Atoi(terraform.GetVariableAsStringFromVarFile(t, varDir, "etcd_only_nodes"))
@@ -87,6 +92,7 @@ func BuildCluster(t *testing.T, destroy bool) (string, error) {
 	KubeConfigFile = terraform.Output(t, &terraformOptions, "kubeconfig")
 	MasterIPs = terraform.Output(t, &terraformOptions, "master_ips")
 	WorkerIPs = terraform.Output(t, &terraformOptions, "worker_ips")
+	WinWorkerIPs = terraform.Output(t, &terraformOptions, "win_worker_ips")
 
 	return "cluster created", nil
 }

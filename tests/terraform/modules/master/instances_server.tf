@@ -24,6 +24,10 @@ resource "aws_instance" "master" {
     source      = "optional_write_files.sh"
     destination = "/tmp/optional_write_files.sh"
   }
+  provisioner "file" {
+    source      = "../scripts/install_sonobuoy.sh"
+    destination = "/tmp/install_sonobuoy.sh"
+  }
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/optional_write_files.sh",

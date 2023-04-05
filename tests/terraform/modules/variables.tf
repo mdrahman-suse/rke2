@@ -8,6 +8,7 @@ variable "password" {
 }
 variable "no_of_server_nodes" {}
 variable "no_of_worker_nodes" {}
+variable "win_no_of_worker_nodes" {}
 variable "create_lb" {
   description = "Create Network Load Balancer if set to true"
   type = bool
@@ -19,8 +20,10 @@ variable "access_key" {}
 variable "ssh_key" {}
 variable "availability_zone" {}
 variable "aws_ami" {}
+variable "win_aws_ami" {}
 variable "aws_user" {}
 variable "ec2_instance_class" {}
+variable "win_ec2_instance_class" {}
 variable "volume_size" {}
 variable "iam_role" {}
 variable "hosted_zone" {}
